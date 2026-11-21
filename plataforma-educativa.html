@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Educativa | Beneficios de la Aplicación Educativa</title>
+    <style>
+        /* Paleta pastel: menta, verde azulado y amarillo suave */
+        :root {
+            --bg: #f2faf6;
+            --cream: #fffdf5;
+            --card-bg: #ffffff;
+            --teal: #2a7f78;
+            --teal-dark: #1f4a46;
+            --teal-soft: #dcf0e8;
+            --glow: rgba(42, 127, 120, 0.22);
+            --yellow: #fcd462;
+            --yellow-soft: #fdf1c4;
+            --yellow-dark: #d9a920;
+            --text-main: #1f4a46;
+            --text-sub: #5f7a76;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(220, 240, 232, 0.9) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(253, 241, 196, 0.7) 0%, transparent 45%);
+            background-attachment: fixed;
+        }
+
+        #progress {
+            position: fixed; top: 0; left: 0; height: 4px; width: 0;
+            background: linear-gradient(90deg, var(--teal), var(--yellow));
+            z-index: 200;
+        }
+
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(255, 253, 245, 0.92);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(42, 127, 120, 0.15);
+        }
+        .logo { font-weight: 800; font-size: 1.3rem; color: var(--teal); }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a {
+            color: var(--teal-dark); text-decoration: none; font-weight: 600; font-size: 0.95rem;
+            padding: 0.4rem 0.2rem; border-bottom: 2px solid transparent; transition: all 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--teal); border-color: var(--yellow); }
+        .menu-btn { display: none; background: none; border: 1px solid var(--teal); color: var(--teal); font-size: 1.4rem; border-radius: 8px; padding: 0.2rem 0.7rem; cursor: pointer; }
+
+        section { padding: 4rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 2.5rem; }
+        .section-title h2 { font-size: 2.2rem; font-weight: 800; color: var(--teal-dark); }
+        .section-title p {
+            display: inline-block; margin-top: 0.8rem; padding: 0.35rem 1rem; border-radius: 20px;
+            background: var(--teal-soft); color: var(--teal);
+            font-size: 0.8rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+        }
+
+        #inicio { text-align: center; padding-top: 5rem; }
+        #inicio h1 { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; color: var(--teal-dark); }
+        #inicio .lead {
+            display: inline-block; padding: 0.4rem 1.1rem; border-radius: 20px; margin-bottom: 1.5rem;
+            background: var(--teal-soft); color: var(--teal);
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        #inicio .intro { max-width: 760px; margin: 0 auto 2rem; font-size: 1.1rem; line-height: 1.8; color: var(--text-sub); }
+
+        .btn {
+            display: inline-block; cursor: pointer; border: 2px solid var(--teal);
+            background: var(--teal); color: #ffffff;
+            padding: 0.8rem 2rem; border-radius: 12px; font-weight: 700; font-size: 1rem;
+            transition: all 0.3s; text-decoration: none;
+        }
+        .btn:hover { background: var(--yellow); border-color: var(--yellow); color: var(--teal-dark); box-shadow: 0 8px 20px rgba(252, 212, 98, 0.5); transform: translateY(-3px); }
+
+        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
+
+        .card {
+            background: var(--card-bg);
+            border: 2px dashed rgba(42, 127, 120, 0.3);
+            border-radius: 24px; padding: 2.5rem 2rem; position: relative;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 24px rgba(31, 74, 70, 0.07);
+        }
+        .card:hover { transform: translateY(-8px); border-color: var(--teal); box-shadow: 0 14px 32px var(--glow); }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px;
+            background: linear-gradient(90deg, var(--teal), var(--yellow));
+            border-radius: 22px 22px 0 0;
+        }
+        .icon-box {
+            width: 60px; height: 60px; background: var(--yellow-soft);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--yellow-dark); font-size: 1.5rem;
+        }
+        .card h3 { font-size: 1.5rem; color: var(--teal-dark); margin-bottom: 1rem; }
+        .card p { font-size: 1.02rem; line-height: 1.7; color: var(--text-sub); }
+        .badge {
+            display: inline-block; margin-top: 1.5rem; padding: 0.4rem 1rem;
+            background: var(--yellow-soft); border: 1px solid var(--yellow);
+            color: var(--yellow-dark); border-radius: 20px; font-size: 0.85rem; font-weight: 700;
+        }
+        .badge-neon { background: var(--teal-soft); border-color: var(--teal-soft); color: var(--teal); }
+
+        /* Pestañas */
+        .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin-bottom: 2rem; }
+        .tab-btn {
+            cursor: pointer; background: var(--card-bg); color: var(--teal);
+            border: 2px solid var(--teal-soft); border-radius: 12px;
+            padding: 0.6rem 1.5rem; font-weight: 700; font-size: 1rem; transition: all 0.3s;
+        }
+        .tab-btn:hover { border-color: var(--yellow); background: var(--yellow-soft); }
+        .tab-btn.active { color: #ffffff; background: var(--teal); border-color: var(--teal); box-shadow: 0 6px 16px var(--glow); }
+        .tab-panel { display: none; animation: fade 0.5s ease; }
+        .tab-panel.active { display: block; }
+        @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+        .benefits { list-style: none; display: grid; gap: 1.1rem; }
+        .benefits li { position: relative; padding-left: 1.8rem; line-height: 1.7; font-size: 1.02rem; color: var(--text-sub); }
+        .benefits li::before {
+            content: ''; position: absolute; left: 0; top: 0.6rem; width: 10px; height: 10px; border-radius: 50%;
+            background: var(--yellow);
+        }
+        .benefits strong { color: var(--teal-dark); font-weight: 700; }
+
+        /* Contadores */
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; text-align: center; }
+        .stat { background: var(--teal-soft); border-radius: 20px; padding: 2rem 1rem; }
+        .stat strong { display: block; font-size: 2.6rem; color: var(--teal); }
+        .stat span { color: var(--teal-dark); font-size: 0.95rem; font-weight: 600; }
+
+        .reveal { opacity: 0; transform: translateY(35px); transition: all 0.8s ease; }
+        .reveal.visible { opacity: 1; transform: none; }
+
+        #to-top {
+            position: fixed; bottom: 1.5rem; right: 1.5rem; width: 48px; height: 48px; border-radius: 50%;
+            background: var(--yellow); border: none; color: var(--teal-dark);
+            font-size: 1.3rem; font-weight: 700; cursor: pointer; opacity: 0; pointer-events: none; transition: all 0.3s; z-index: 150;
+            box-shadow: 0 6px 16px rgba(252, 212, 98, 0.6);
+        }
+        #to-top.show { opacity: 1; pointer-events: auto; }
+        #to-top:hover { transform: translateY(-4px); }
+
+        footer { text-align: center; background: var(--teal); color: var(--cream); font-size: 0.9rem; padding: 2rem 1rem; margin-top: 3rem; }
+        footer span { color: var(--yellow); font-weight: 700; }
+
+        @media (max-width: 720px) {
+            .menu-btn { display: block; }
+            .nav-links {
+                position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0;
+                background: var(--cream); display: none; padding: 1rem 2rem;
+                border-bottom: 1px solid rgba(42, 127, 120, 0.15);
+            }
+            .nav-links.open { display: flex; }
+            .nav-links li { padding: 0.6rem 0; }
+            #inicio h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="progress"></div>
+
+    <nav>
+        <div class="logo">Plataforma Educativa</div>
+        <button class="menu-btn" id="menuBtn" aria-label="Menú">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#impacto">Impacto institucional</a></li>
+            <li><a href="#comunidad">Comunidad educativa</a></li>
+        </ul>
+    </nav>
+
+    <!-- INICIO -->
+    <section id="inicio">
+        <h1 class="reveal">Plataforma Educativa</h1>
+        <p class="lead reveal">Gestión académica, comunicación y aprendizaje en un solo lugar</p>
+        <p class="intro reveal">
+            La implementación de una aplicación educativa en una institución escolar optimiza la gestión académica, centraliza la comunicación y transforma los procesos de enseñanza y aprendizaje mediante el uso de la tecnología.
+        </p>
+        <a href="#impacto" class="btn reveal">Conocer los beneficios</a>
+    </section>
+
+    <!-- IMPACTO INSTITUCIONAL -->
+    <section id="impacto">
+        <div class="section-title reveal">
+            <h2>Impacto Institucional</h2>
+            <p>Beneficios generales</p>
+        </div>
+        <div class="container">
+            <article class="card reveal">
+                <div class="icon-box">◈</div>
+                <h3>Centralización de la información</h3>
+                <p>Reúne en una sola plataforma la gestión académica, administrativa y comunicativa de la institución.</p>
+                <span class="badge">Todo en un solo lugar</span>
+            </article>
+
+            <article class="card reveal">
+                <div class="icon-box">∞</div>
+                <h3>Continuidad del aprendizaje</h3>
+                <p>Permite el acceso a contenidos, tareas y recursos en cualquier momento y lugar, eliminando las barreras del aula física.</p>
+                <span class="badge badge-neon">Cualquier momento y lugar</span>
+            </article>
+
+            <article class="card reveal">
+                <div class="icon-box">♻</div>
+                <h3>Reducción de costos y uso de papel</h3>
+                <p>Digitaliza procesos como entregas de trabajos, evaluaciones, boletines y comunicados, promoviendo la sostenibilidad ambiental y el ahorro operativo.</p>
+                <span class="badge">Sostenibilidad</span>
+            </article>
+
+            <article class="card reveal">
+                <div class="icon-box">✦</div>
+                <h3>Accesibilidad e inclusión</h3>
+                <p>Permite adaptar contenidos para alumnos con diversas necesidades de aprendizaje mediante formatos multimedia (audio, video, texto interactivo).</p>
+                <span class="badge badge-neon">Aprendizaje para todos</span>
+            </article>
+        </div>
+    </section>
+
+    <!-- CONTADORES -->
+    <section>
+        <div class="stats">
+            <div class="stat reveal"><strong data-count="4">0</strong><span>Integrantes de la comunidad educativa</span></div>
+            <div class="stat reveal"><strong data-count="4">0</strong><span>Beneficios institucionales</span></div>
+            <div class="stat reveal"><strong data-count="14">0</strong><span>Beneficios por integrante</span></div>
+        </div>
+    </section>
+
+    <!-- COMUNIDAD EDUCATIVA (PESTAÑAS) -->
+    <section id="comunidad">
+        <div class="section-title reveal">
+            <h2>Beneficios por Integrante</h2>
+            <p>Comunidad educativa</p>
+        </div>
+
+        <div class="tabs reveal">
+            <button class="tab-btn active" data-tab="estudiantes">Estudiantes</button>
+            <button class="tab-btn" data-tab="docentes">Docentes</button>
+            <button class="tab-btn" data-tab="padres">Padres y tutores</button>
+            <button class="tab-btn" data-tab="directivos">Directivos y administrativos</button>
+        </div>
+
+        <div class="tab-panel active" id="estudiantes">
+            <article class="card">
+                <h3>Estudiantes</h3>
+                <ul class="benefits">
+                    <li><strong>Aprendizaje personalizado y autónomo:</strong> Facilita avanzar a su propio ritmo, repasar temas complejos y acceder a material complementario según sus necesidades individuales.</li>
+                    <li><strong>Mayor motivación e interactividad:</strong> La incorporación de gamificación (medallas, retos, niveles) e interfaces dinámicas incrementa el interés y la participación activa.</li>
+                    <li><strong>Retroalimentación inmediata:</strong> Reciben calificaciones y comentarios al instante en quizzes o tareas, lo que les permite identificar y corregir errores a tiempo.</li>
+                    <li><strong>Desarrollo de habilidades digitales:</strong> Promueve la alfabetización digital, la responsabilidad en línea y la autogestión del tiempo desde etapas tempranas.</li>
+                </ul>
+            </article>
+        </div>
+
+        <div class="tab-panel" id="docentes">
+            <article class="card">
+                <h3>Docentes</h3>
+                <ul class="benefits">
+                    <li><strong>Automatización de tareas administrativas:</strong> Reduce el tiempo dedicado a pasar asistencia, calificar evaluaciones de opción múltiple o registrar notas, permitiendo enfocar más tiempo en la enseñanza.</li>
+                    <li><strong>Seguimiento basado en datos:</strong> Proporciona analíticas en tiempo real para detectar rápidamente a estudiantes en riesgo académico o con rezago y aplicar intervenciones oportunas.</li>
+                    <li><strong>Gestión eficiente de contenidos:</strong> Facilita la creación, actualización y distribución de programas de estudio, rúbricas, tareas y recursos didácticos digitales.</li>
+                    <li><strong>Canal de comunicación ordenado:</strong> Establece un medio oficial y estructurado para responder dudas de alumnos o tutores sin invadir su privacidad personal.</li>
+                </ul>
+            </article>
+        </div>
+
+        <div class="tab-panel" id="padres">
+            <article class="card">
+                <h3>Padres de Familia y Tutores</h3>
+                <ul class="benefits">
+                    <li><strong>Visibilidad del avance académico:</strong> Acceso directo a calificaciones, asistencia, tareas pendientes y comportamiento escolar sin esperar a las entregas de boletines periódicas.</li>
+                    <li><strong>Mayor involucramiento:</strong> Permite acompañar el proceso de aprendizaje de sus hijos de manera informada y brindar apoyo en casa de forma oportuna.</li>
+                    <li><strong>Comunicación fluida y directa:</strong> Recepción instantánea de circulares, avisos, eventos escolares y mensajes directos de los profesores o directivos.</li>
+                </ul>
+            </article>
+        </div>
+
+        <div class="tab-panel" id="directivos">
+            <article class="card">
+                <h3>Directivos y Personal Administrativo</h3>
+                <ul class="benefits">
+                    <li><strong>Toma de decisiones informada:</strong> Generación de reportes institucionales sobre rendimiento global, índices de deserción, asistencia y efectividad docente.</li>
+                    <li><strong>Optimización de procesos operativos:</strong> Agiliza trámites como matriculación, cobros, emisión de certificados y control de expedientes de alumnos.</li>
+                    <li><strong>Fortalecimiento de la imagen institucional:</strong> Posiciona al colegio como un centro educativo innovador, moderno y adaptado a las exigencias tecnológicas actuales.</li>
+                </ul>
+            </article>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Plataforma Educativa | Desarrollado con <span>Menta & Amarillo Pastel</span></p>
+    </footer>
+
+    <button id="to-top" aria-label="Subir">↑</button>
+
+    <script>
+        // Menú móvil
+        const navLinks = document.getElementById('navLinks');
+        document.getElementById('menuBtn').addEventListener('click', () => navLinks.classList.toggle('open'));
+        navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+        // Aparición al hacer scroll
+        const revealObs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+        // Contadores animados
+        const countObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                const el = e.target, target = +el.dataset.count, start = performance.now(), dur = 1400;
+                const tick = now => {
+                    const p = Math.min((now - start) / dur, 1);
+                    el.textContent = Math.floor(p * target).toLocaleString('es-MX');
+                    if (p < 1) requestAnimationFrame(tick);
+                };
+                requestAnimationFrame(tick);
+                countObs.unobserve(el);
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
+
+        // Pestañas
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(btn.dataset.tab).classList.add('active');
+        }));
+
+        // Progreso de scroll, botón subir y enlace activo
+        const progress = document.getElementById('progress'), toTop = document.getElementById('to-top');
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            const h = document.documentElement;
+            progress.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+            toTop.classList.toggle('show', h.scrollTop > 400);
+            let current = '';
+            sections.forEach(s => { if (h.scrollTop >= s.offsetTop - 150) current = s.id; });
+            navLinks.querySelectorAll('a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+        });
+        toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    </script>
+</body>
+</html>
